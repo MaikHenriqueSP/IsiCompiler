@@ -20,6 +20,7 @@ cmd         :   cmdLeitura
             |   cmdExpr
             |   cmdIf
             |   cmdEnquanto
+            |   cmdPara
             ;
 
 cmdLeitura  :  'leia' AP ID FP FIM
@@ -37,6 +38,12 @@ cmdIf       :   'se' AP expr OPREL expr FP
             ;
 
 cmdEnquanto :   'enquanto' AP expr OPREL expr FP
+                AC
+                (cmd)+
+                FC
+            ;
+
+cmdPara     :   'para' AP (cmdExpr)* ';' (termo OPREL termo)*  ';' (cmdExpr)*  FP
                 AC
                 (cmd)+
                 FC
@@ -60,7 +67,7 @@ termo       :   NUM |  ID
 OP          :   '+' | '-' | '*' | '/'
             ;
 
-NUM         :   [0-9]+
+NUM         :   [0-9]+('.'[0-9]+)?
             ;
 
 OPREL       :   '<' | '>' | '<=' | '>=' | '!=' | '=='
