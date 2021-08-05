@@ -18,16 +18,16 @@ public class IsiLanguageParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		ID=10, AP=11, FP=12, ATR=13, OP=14, NUM=15, OPREL=16, AC=17, FC=18, WS=19, 
-		FIM=20;
+		T__9=10, ID=11, AP=12, FP=13, ATR=14, OP=15, NUM=16, OPREL=17, AC=18, 
+		FC=19, WS=20, FIM=21;
 	public static final int
 		RULE_programa = 0, RULE_declara = 1, RULE_bloco = 2, RULE_cmd = 3, RULE_cmdLeitura = 4, 
-		RULE_cmdEscrita = 5, RULE_cmdExpr = 6, RULE_cmdIf = 7, RULE_expr = 8, 
-		RULE_termo = 9;
+		RULE_cmdEscrita = 5, RULE_cmdExpr = 6, RULE_cmdIf = 7, RULE_cmdEnquanto = 8, 
+		RULE_expr = 9, RULE_termo = 10;
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"programa", "declara", "bloco", "cmd", "cmdLeitura", "cmdEscrita", "cmdExpr", 
-			"cmdIf", "expr", "termo"
+			"cmdIf", "cmdEnquanto", "expr", "termo"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -35,15 +35,15 @@ public class IsiLanguageParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'programa'", "'fimprog'", "'declare'", "','", "'leia'", "'escreva'", 
-			"'se'", "'entao'", "'senao'", null, "'('", "')'", "':='", null, null, 
-			null, "'{'", "'}'", null, "'.'"
+			"'se'", "'entao'", "'senao'", "'enquanto'", null, "'('", "')'", "':='", 
+			null, null, null, "'{'", "'}'", null, "'.'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, "ID", "AP", 
-			"FP", "ATR", "OP", "NUM", "OPREL", "AC", "FC", "WS", "FIM"
+			null, null, null, null, null, null, null, null, null, null, null, "ID", 
+			"AP", "FP", "ATR", "OP", "NUM", "OPREL", "AC", "FC", "WS", "FIM"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -125,15 +125,15 @@ public class IsiLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(20);
-			match(T__0);
-			setState(21);
-			declara();
 			setState(22);
-			bloco();
+			match(T__0);
 			setState(23);
-			match(T__1);
+			declara();
 			setState(24);
+			bloco();
+			setState(25);
+			match(T__1);
+			setState(26);
 			match(FIM);
 			}
 		}
@@ -175,27 +175,27 @@ public class IsiLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(26);
+			setState(28);
 			match(T__2);
-			setState(27);
+			setState(29);
 			match(ID);
-			setState(32);
+			setState(34);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__3) {
 				{
 				{
-				setState(28);
+				setState(30);
 				match(T__3);
-				setState(29);
+				setState(31);
 				match(ID);
 				}
 				}
-				setState(34);
+				setState(36);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(35);
+			setState(37);
 			match(FIM);
 			}
 		}
@@ -242,22 +242,22 @@ public class IsiLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(40); 
+			setState(42); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(37);
+				setState(39);
 				cmd();
-				setState(38);
+				setState(40);
 				match(FIM);
 				}
 				}
-				setState(42); 
+				setState(44); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << ID))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__9) | (1L << ID))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -284,6 +284,9 @@ public class IsiLanguageParser extends Parser {
 		public CmdIfContext cmdIf() {
 			return getRuleContext(CmdIfContext.class,0);
 		}
+		public CmdEnquantoContext cmdEnquanto() {
+			return getRuleContext(CmdEnquantoContext.class,0);
+		}
 		public CmdContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -302,35 +305,42 @@ public class IsiLanguageParser extends Parser {
 		CmdContext _localctx = new CmdContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_cmd);
 		try {
-			setState(48);
+			setState(51);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__4:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(44);
+				setState(46);
 				cmdLeitura();
 				}
 				break;
 			case T__5:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(45);
+				setState(47);
 				cmdEscrita();
 				}
 				break;
 			case ID:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(46);
+				setState(48);
 				cmdExpr();
 				}
 				break;
 			case T__6:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(47);
+				setState(49);
 				cmdIf();
+				}
+				break;
+			case T__9:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(50);
+				cmdEnquanto();
 				}
 				break;
 			default:
@@ -373,15 +383,15 @@ public class IsiLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(50);
-			match(T__4);
-			setState(51);
-			match(AP);
-			setState(52);
-			match(ID);
 			setState(53);
-			match(FP);
+			match(T__4);
 			setState(54);
+			match(AP);
+			setState(55);
+			match(ID);
+			setState(56);
+			match(FP);
+			setState(57);
 			match(FIM);
 			}
 		}
@@ -421,15 +431,15 @@ public class IsiLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(56);
-			match(T__5);
-			setState(57);
-			match(AP);
-			setState(58);
-			match(ID);
 			setState(59);
-			match(FP);
+			match(T__5);
 			setState(60);
+			match(AP);
+			setState(61);
+			match(ID);
+			setState(62);
+			match(FP);
+			setState(63);
 			match(FIM);
 			}
 		}
@@ -471,13 +481,13 @@ public class IsiLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(62);
-			match(ID);
-			setState(63);
-			match(ATR);
-			setState(64);
-			expr();
 			setState(65);
+			match(ID);
+			setState(66);
+			match(ATR);
+			setState(67);
+			expr();
+			setState(68);
 			match(FIM);
 			}
 		}
@@ -494,8 +504,11 @@ public class IsiLanguageParser extends Parser {
 
 	public static class CmdIfContext extends ParserRuleContext {
 		public TerminalNode AP() { return getToken(IsiLanguageParser.AP, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
 		}
 		public TerminalNode OPREL() { return getToken(IsiLanguageParser.OPREL, 0); }
 		public TerminalNode FP() { return getToken(IsiLanguageParser.FP, 0); }
@@ -534,64 +547,148 @@ public class IsiLanguageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(67);
-			match(T__6);
-			setState(68);
-			match(AP);
-			setState(69);
-			expr();
 			setState(70);
-			match(OPREL);
+			match(T__6);
 			setState(71);
-			match(FP);
+			match(AP);
 			setState(72);
-			match(T__7);
+			expr();
 			setState(73);
+			match(OPREL);
+			setState(74);
+			expr();
+			setState(75);
+			match(FP);
+			setState(76);
+			match(T__7);
+			setState(77);
 			match(AC);
-			setState(75); 
+			setState(79); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(74);
+				setState(78);
 				cmd();
 				}
 				}
-				setState(77); 
+				setState(81); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << ID))) != 0) );
-			setState(79);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__9) | (1L << ID))) != 0) );
+			setState(83);
 			match(FC);
-			setState(89);
+			setState(93);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__8) {
 				{
-				setState(80);
+				setState(84);
 				match(T__8);
-				setState(81);
+				setState(85);
 				match(AC);
-				setState(83); 
+				setState(87); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(82);
+					setState(86);
 					cmd();
 					}
 					}
-					setState(85); 
+					setState(89); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << ID))) != 0) );
-				setState(87);
+				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__9) | (1L << ID))) != 0) );
+				setState(91);
 				match(FC);
 				}
 			}
 
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class CmdEnquantoContext extends ParserRuleContext {
+		public TerminalNode AP() { return getToken(IsiLanguageParser.AP, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode OPREL() { return getToken(IsiLanguageParser.OPREL, 0); }
+		public TerminalNode FP() { return getToken(IsiLanguageParser.FP, 0); }
+		public TerminalNode AC() { return getToken(IsiLanguageParser.AC, 0); }
+		public TerminalNode FC() { return getToken(IsiLanguageParser.FC, 0); }
+		public List<CmdContext> cmd() {
+			return getRuleContexts(CmdContext.class);
+		}
+		public CmdContext cmd(int i) {
+			return getRuleContext(CmdContext.class,i);
+		}
+		public CmdEnquantoContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_cmdEnquanto; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof IsiLanguageListener ) ((IsiLanguageListener)listener).enterCmdEnquanto(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof IsiLanguageListener ) ((IsiLanguageListener)listener).exitCmdEnquanto(this);
+		}
+	}
+
+	public final CmdEnquantoContext cmdEnquanto() throws RecognitionException {
+		CmdEnquantoContext _localctx = new CmdEnquantoContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_cmdEnquanto);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(95);
+			match(T__9);
+			setState(96);
+			match(AP);
+			setState(97);
+			expr();
+			setState(98);
+			match(OPREL);
+			setState(99);
+			expr();
+			setState(100);
+			match(FP);
+			setState(101);
+			match(AC);
+			setState(103); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(102);
+				cmd();
+				}
+				}
+				setState(105); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__9) | (1L << ID))) != 0) );
+			setState(107);
+			match(FC);
 			}
 		}
 		catch (RecognitionException re) {
@@ -632,26 +729,26 @@ public class IsiLanguageParser extends Parser {
 
 	public final ExprContext expr() throws RecognitionException {
 		ExprContext _localctx = new ExprContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_expr);
+		enterRule(_localctx, 18, RULE_expr);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(91);
+			setState(109);
 			termo();
-			setState(96);
+			setState(114);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==OP) {
 				{
 				{
-				setState(92);
+				setState(110);
 				match(OP);
-				setState(93);
+				setState(111);
 				termo();
 				}
 				}
-				setState(98);
+				setState(116);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -687,12 +784,12 @@ public class IsiLanguageParser extends Parser {
 
 	public final TermoContext termo() throws RecognitionException {
 		TermoContext _localctx = new TermoContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_termo);
+		enterRule(_localctx, 20, RULE_termo);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(99);
+			setState(117);
 			_la = _input.LA(1);
 			if ( !(_la==ID || _la==NUM) ) {
 			_errHandler.recoverInline(this);
@@ -716,31 +813,35 @@ public class IsiLanguageParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\26h\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\3"+
-		"\2\3\2\3\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\7\3!\n\3\f\3\16\3$\13\3\3\3\3\3"+
-		"\3\4\3\4\3\4\6\4+\n\4\r\4\16\4,\3\5\3\5\3\5\3\5\5\5\63\n\5\3\6\3\6\3\6"+
-		"\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3"+
-		"\t\3\t\3\t\3\t\3\t\6\tN\n\t\r\t\16\tO\3\t\3\t\3\t\3\t\6\tV\n\t\r\t\16"+
-		"\tW\3\t\3\t\5\t\\\n\t\3\n\3\n\3\n\7\na\n\n\f\n\16\nd\13\n\3\13\3\13\3"+
-		"\13\2\2\f\2\4\6\b\n\f\16\20\22\24\2\3\4\2\f\f\21\21\2f\2\26\3\2\2\2\4"+
-		"\34\3\2\2\2\6*\3\2\2\2\b\62\3\2\2\2\n\64\3\2\2\2\f:\3\2\2\2\16@\3\2\2"+
-		"\2\20E\3\2\2\2\22]\3\2\2\2\24e\3\2\2\2\26\27\7\3\2\2\27\30\5\4\3\2\30"+
-		"\31\5\6\4\2\31\32\7\4\2\2\32\33\7\26\2\2\33\3\3\2\2\2\34\35\7\5\2\2\35"+
-		"\"\7\f\2\2\36\37\7\6\2\2\37!\7\f\2\2 \36\3\2\2\2!$\3\2\2\2\" \3\2\2\2"+
-		"\"#\3\2\2\2#%\3\2\2\2$\"\3\2\2\2%&\7\26\2\2&\5\3\2\2\2\'(\5\b\5\2()\7"+
-		"\26\2\2)+\3\2\2\2*\'\3\2\2\2+,\3\2\2\2,*\3\2\2\2,-\3\2\2\2-\7\3\2\2\2"+
-		".\63\5\n\6\2/\63\5\f\7\2\60\63\5\16\b\2\61\63\5\20\t\2\62.\3\2\2\2\62"+
-		"/\3\2\2\2\62\60\3\2\2\2\62\61\3\2\2\2\63\t\3\2\2\2\64\65\7\7\2\2\65\66"+
-		"\7\r\2\2\66\67\7\f\2\2\678\7\16\2\289\7\26\2\29\13\3\2\2\2:;\7\b\2\2;"+
-		"<\7\r\2\2<=\7\f\2\2=>\7\16\2\2>?\7\26\2\2?\r\3\2\2\2@A\7\f\2\2AB\7\17"+
-		"\2\2BC\5\22\n\2CD\7\26\2\2D\17\3\2\2\2EF\7\t\2\2FG\7\r\2\2GH\5\22\n\2"+
-		"HI\7\22\2\2IJ\7\16\2\2JK\7\n\2\2KM\7\23\2\2LN\5\b\5\2ML\3\2\2\2NO\3\2"+
-		"\2\2OM\3\2\2\2OP\3\2\2\2PQ\3\2\2\2Q[\7\24\2\2RS\7\13\2\2SU\7\23\2\2TV"+
-		"\5\b\5\2UT\3\2\2\2VW\3\2\2\2WU\3\2\2\2WX\3\2\2\2XY\3\2\2\2YZ\7\24\2\2"+
-		"Z\\\3\2\2\2[R\3\2\2\2[\\\3\2\2\2\\\21\3\2\2\2]b\5\24\13\2^_\7\20\2\2_"+
-		"a\5\24\13\2`^\3\2\2\2ad\3\2\2\2b`\3\2\2\2bc\3\2\2\2c\23\3\2\2\2db\3\2"+
-		"\2\2ef\t\2\2\2f\25\3\2\2\2\t\",\62OW[b";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27z\4\2\t\2\4\3\t"+
+		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"+
+		"\f\t\f\3\2\3\2\3\2\3\2\3\2\3\2\3\3\3\3\3\3\3\3\7\3#\n\3\f\3\16\3&\13\3"+
+		"\3\3\3\3\3\4\3\4\3\4\6\4-\n\4\r\4\16\4.\3\5\3\5\3\5\3\5\3\5\5\5\66\n\5"+
+		"\3\6\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3"+
+		"\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\6\tR\n\t\r\t\16\tS\3\t\3\t\3\t\3\t"+
+		"\6\tZ\n\t\r\t\16\t[\3\t\3\t\5\t`\n\t\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\6"+
+		"\nj\n\n\r\n\16\nk\3\n\3\n\3\13\3\13\3\13\7\13s\n\13\f\13\16\13v\13\13"+
+		"\3\f\3\f\3\f\2\2\r\2\4\6\b\n\f\16\20\22\24\26\2\3\4\2\r\r\22\22\2y\2\30"+
+		"\3\2\2\2\4\36\3\2\2\2\6,\3\2\2\2\b\65\3\2\2\2\n\67\3\2\2\2\f=\3\2\2\2"+
+		"\16C\3\2\2\2\20H\3\2\2\2\22a\3\2\2\2\24o\3\2\2\2\26w\3\2\2\2\30\31\7\3"+
+		"\2\2\31\32\5\4\3\2\32\33\5\6\4\2\33\34\7\4\2\2\34\35\7\27\2\2\35\3\3\2"+
+		"\2\2\36\37\7\5\2\2\37$\7\r\2\2 !\7\6\2\2!#\7\r\2\2\" \3\2\2\2#&\3\2\2"+
+		"\2$\"\3\2\2\2$%\3\2\2\2%\'\3\2\2\2&$\3\2\2\2\'(\7\27\2\2(\5\3\2\2\2)*"+
+		"\5\b\5\2*+\7\27\2\2+-\3\2\2\2,)\3\2\2\2-.\3\2\2\2.,\3\2\2\2./\3\2\2\2"+
+		"/\7\3\2\2\2\60\66\5\n\6\2\61\66\5\f\7\2\62\66\5\16\b\2\63\66\5\20\t\2"+
+		"\64\66\5\22\n\2\65\60\3\2\2\2\65\61\3\2\2\2\65\62\3\2\2\2\65\63\3\2\2"+
+		"\2\65\64\3\2\2\2\66\t\3\2\2\2\678\7\7\2\289\7\16\2\29:\7\r\2\2:;\7\17"+
+		"\2\2;<\7\27\2\2<\13\3\2\2\2=>\7\b\2\2>?\7\16\2\2?@\7\r\2\2@A\7\17\2\2"+
+		"AB\7\27\2\2B\r\3\2\2\2CD\7\r\2\2DE\7\20\2\2EF\5\24\13\2FG\7\27\2\2G\17"+
+		"\3\2\2\2HI\7\t\2\2IJ\7\16\2\2JK\5\24\13\2KL\7\23\2\2LM\5\24\13\2MN\7\17"+
+		"\2\2NO\7\n\2\2OQ\7\24\2\2PR\5\b\5\2QP\3\2\2\2RS\3\2\2\2SQ\3\2\2\2ST\3"+
+		"\2\2\2TU\3\2\2\2U_\7\25\2\2VW\7\13\2\2WY\7\24\2\2XZ\5\b\5\2YX\3\2\2\2"+
+		"Z[\3\2\2\2[Y\3\2\2\2[\\\3\2\2\2\\]\3\2\2\2]^\7\25\2\2^`\3\2\2\2_V\3\2"+
+		"\2\2_`\3\2\2\2`\21\3\2\2\2ab\7\f\2\2bc\7\16\2\2cd\5\24\13\2de\7\23\2\2"+
+		"ef\5\24\13\2fg\7\17\2\2gi\7\24\2\2hj\5\b\5\2ih\3\2\2\2jk\3\2\2\2ki\3\2"+
+		"\2\2kl\3\2\2\2lm\3\2\2\2mn\7\25\2\2n\23\3\2\2\2ot\5\26\f\2pq\7\21\2\2"+
+		"qs\5\26\f\2rp\3\2\2\2sv\3\2\2\2tr\3\2\2\2tu\3\2\2\2u\25\3\2\2\2vt\3\2"+
+		"\2\2wx\t\2\2\2x\27\3\2\2\2\n$.\65S[_kt";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

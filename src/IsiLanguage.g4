@@ -19,17 +19,27 @@ cmd         :   cmdLeitura
             |   cmdEscrita
             |   cmdExpr
             |   cmdIf
+            |   cmdEnquanto
             ;
 
-cmdLeitura  :  'leia' AP ID FP FIM;
+cmdLeitura  :  'leia' AP ID FP FIM
+            ;
 
-cmdEscrita  :   'escreva' AP ID FP FIM;
+cmdEscrita  :   'escreva' AP ID FP FIM
+            ;
 
-cmdExpr     :   ID ATR expr FIM;
+cmdExpr     :   ID ATR expr FIM
+            ;
 
-cmdIf       :   'se' AP expr OPREL FP
-                'entao' AC cmd+ FC
-                ('senao' AC cmd+ FC)?
+cmdIf       :   'se' AP expr OPREL expr FP
+                'entao' AC (cmd)+ FC
+                ('senao' AC (cmd)+ FC)?
+            ;
+
+cmdEnquanto :   'enquanto' AP expr OPREL expr FP
+                AC
+                (cmd)+
+                FC
             ;
 
 AP          :   '('
