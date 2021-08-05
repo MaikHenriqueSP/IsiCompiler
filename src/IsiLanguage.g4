@@ -81,21 +81,24 @@ cmdExpr     :   ID {verifySymbolDeclaration(_input.LT(-1).getText());}
                 FIM
             ;
 
-cmdIf       :   'se' AP expr OPREL expr FP
+cmdIf       :   'se' AP conditional FP
                 'entao' AC (cmd)+ FC
                 ('senao' AC (cmd)+ FC)?
             ;
 
-cmdEnquanto :   'enquanto' AP expr OPREL expr FP
+cmdEnquanto :   'enquanto' AP conditional FP
                 AC
                 (cmd)+
                 FC
             ;
 
-cmdPara     :   'para' AP ((cmdExpr)(VIR cmdExpr)*)* SEMICOLON ((expr OPREL expr)(OPREL expr)*)*  SEMICOLON ((cmdExpr)(VIR cmdExpr)*)*  FP
+cmdPara     :   'para' AP ((cmdExpr)(VIR cmdExpr)*)* SEMICOLON conditional  SEMICOLON ((cmdExpr)(VIR cmdExpr)*)*  FP
                 AC
                 (cmd)+
                 FC
+            ;
+
+conditional :   ((expr OPREL expr)(LOP expr OPREL expr)*)*
             ;
 
 AP          :   '('
@@ -120,6 +123,9 @@ NUM         :   [0-9]+('.'[0-9]+)?
             ;
 
 OPREL       :   '<' | '>' | '<=' | '>=' | '!=' | '=='
+            ;
+
+LOP         :   '&&' | '||'
             ;
 
 AC          :   '{'

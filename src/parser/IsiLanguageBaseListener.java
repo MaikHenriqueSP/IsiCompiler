@@ -153,6 +153,18 @@ public class IsiLanguageBaseListener implements IsiLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterConditional(IsiLanguageParser.ConditionalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditional(IsiLanguageParser.ConditionalContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterExpr(IsiLanguageParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
