@@ -1,5 +1,29 @@
 grammar IsiLanguage;
 
+@header {
+    import datastructures.*;
+    import exceptions.*;
+    import util.*;
+}
+
+@members {
+    private IsiType type;
+    private String name;
+    private String value;
+    private IsiSymbolTable symbolTable = new IsiSymbolTable();
+    private IsiSymbol symbol;
+
+    public void addSymbol(String id, IsiType type, String value) {
+        if (symbolTable.contains(id)) {
+            throw new IsiSemanticException("Symbol '" + id + "' already declared");
+        }
+
+        IsiSymbol newSymbol = new IsiVariable(id, type, value);
+        symbolTable.add(newSymbol);        
+    }
+    
+}
+
 programa    :   'programa' 
                 declara 
                 bloco
@@ -9,13 +33,15 @@ programa    :   'programa'
 declara     :   (declaraVar)+
             ;
 
-declaraVar  :   TIPO ID (',' ID)* FIM
+declaraVar  :   TIPO ID {addSymbol(_input.LT(-1).getText(), type, null);}
+                (',' ID {addSymbol(_input.LT(-1).getText(), type, null);})*
+                FIM
             ;
 
 TIPO        :   'numero' | 'texto'
             ;
 
-bloco       :   (cmd'.')+
+bloco       :   (cmd'.')*
             ;
 
 ID          :   [a-z] ([a-z] | [A-Z] | [0-9])*

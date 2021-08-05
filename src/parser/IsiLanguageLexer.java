@@ -1,5 +1,10 @@
 // Generated from /media/maik/B4FA6A2DFA69EC54/Users/Windows  7/Desktop/UFABC/12° QUAD - LOADING/Compiladores - Isidro/Projeto/IsiCompiler/src/IsiLanguage.g4 by ANTLR 4.8
 package parser;
+
+    import datastructures.*;
+    import exceptions.*;
+    import util.*;
+
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -85,6 +90,23 @@ public class IsiLanguageLexer extends Lexer {
 	public Vocabulary getVocabulary() {
 		return VOCABULARY;
 	}
+
+
+	    private IsiType type;
+	    private String name;
+	    private String value;
+	    private IsiSymbolTable symbolTable = new IsiSymbolTable();
+	    private IsiSymbol symbol;
+
+	    public void addSymbol(String id, IsiType type, String value) {
+	        if (symbolTable.contains(id)) {
+	            throw new IsiSemanticException("Symbol '" + id + "' already declared");
+	        }
+
+	        IsiSymbol newSymbol = new IsiVariable(id, type, value);
+	        symbolTable.add(newSymbol);        
+	    }
+	    
 
 
 	public IsiLanguageLexer(CharStream input) {

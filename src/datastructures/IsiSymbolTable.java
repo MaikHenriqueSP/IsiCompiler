@@ -22,4 +22,10 @@ public class IsiSymbolTable {
     public IsiSymbol get(String name) {
         return mapToSymbol.get(name);
     }
+
+    @Override
+    public String toString() {
+        return "IsiSymbolTable [mapToSymbol=" + mapToSymbol + "]";
+    }
+    
 }
