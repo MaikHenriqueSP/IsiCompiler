@@ -3,10 +3,10 @@ grammar IsiLanguage;
 programa    :   'programa' 
                 declara 
                 bloco
-                'fimprog'
+                'fimprog' FIM
             ;
 
-declara     :   'declare' ID (',' ID)* '.'
+declara     :   'declare' ID (',' ID)* FIM
             ;
 
 bloco       :   (cmd'.')+
@@ -21,11 +21,11 @@ cmd         :   cmdLeitura
             |   cmdIf
             ;
 
-cmdLeitura  :  'leia' AP ID FP;
+cmdLeitura  :  'leia' AP ID FP FIM;
 
-cmdEscrita  :   'escreva' AP ID FP;
+cmdEscrita  :   'escreva' AP ID FP FIM;
 
-cmdExpr     :   ID  ATR expr;
+cmdExpr     :   ID ATR expr FIM;
 
 cmdIf       :   'se' AP expr OPREL FP
                 'entao' AC cmd+ FC
@@ -63,4 +63,7 @@ FC          :   '}'
             ;
 
 WS          :   (' ' | '\n' | '\t' | '\r')  -> skip
+            ;
+
+FIM         :   '.'
             ;
