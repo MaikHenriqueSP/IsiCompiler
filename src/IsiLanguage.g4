@@ -3,6 +3,7 @@ grammar IsiLanguage;
 programa    :   'programa' 
                 declara 
                 bloco
+                'fimprog'
             ;
 
 declara     :   'declare' ID (',' ID)* '.'
