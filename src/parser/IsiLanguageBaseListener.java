@@ -40,6 +40,18 @@ public class IsiLanguageBaseListener implements IsiLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDeclaraVar(IsiLanguageParser.DeclaraVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDeclaraVar(IsiLanguageParser.DeclaraVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBloco(IsiLanguageParser.BlocoContext ctx) { }
 	/**
 	 * {@inheritDoc}

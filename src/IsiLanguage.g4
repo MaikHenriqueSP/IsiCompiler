@@ -6,7 +6,13 @@ programa    :   'programa'
                 'fimprog' FIM
             ;
 
-declara     :   'declare' ID (',' ID)* FIM
+declara     :   (declaraVar)+
+            ;
+
+declaraVar  :   TIPO ID (',' ID)* FIM
+            ;
+
+TIPO        :   'numero' | 'texto'
             ;
 
 bloco       :   (cmd'.')+
