@@ -100,11 +100,17 @@ public class IsiLanguageLexer extends Lexer {
 
 	    public void addSymbol(String id, IsiType type, String value) {
 	        if (symbolTable.contains(id)) {
-	            throw new IsiSemanticException("Symbol '" + id + "' already declared");
+	            throw new IsiSemanticException("Symbol '" + id + "' already declared.");
 	        }
 
 	        IsiSymbol newSymbol = new IsiVariable(id, type, value);
 	        symbolTable.add(newSymbol);        
+	    }
+
+	    public void verifySymbolDeclaration(String id) {
+	        if (!symbolTable.contains(id)) {
+	            throw new IsiSemanticException("Symbol '" + id + "' wasn't declared.");            
+	        }
 	    }
 	    
 

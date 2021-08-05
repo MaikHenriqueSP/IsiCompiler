@@ -15,11 +15,17 @@ grammar IsiLanguage;
 
     public void addSymbol(String id, IsiType type, String value) {
         if (symbolTable.contains(id)) {
-            throw new IsiSemanticException("Symbol '" + id + "' already declared");
+            throw new IsiSemanticException("Symbol '" + id + "' already declared.");
         }
 
         IsiSymbol newSymbol = new IsiVariable(id, type, value);
         symbolTable.add(newSymbol);        
+    }
+
+    public void verifySymbolDeclaration(String id) {
+        if (!symbolTable.contains(id)) {
+            throw new IsiSemanticException("Symbol '" + id + "' wasn't declared.");            
+        }
     }
     
 }
@@ -55,13 +61,24 @@ cmd         :   cmdLeitura
             |   cmdPara
             ;
 
-cmdLeitura  :  'leia' AP ID FP FIM
+cmdLeitura  :  'leia' 
+                AP 
+                ID {verifySymbolDeclaration(_input.LT(-1).getText());}
+                FP 
+                FIM
             ;
 
-cmdEscrita  :   'escreva' AP ID FP FIM
+cmdEscrita  :   'escreva' 
+                AP 
+                ID {verifySymbolDeclaration(_input.LT(-1).getText());}
+                FP 
+                FIM
             ;
 
-cmdExpr     :   ID ATR expr FIM
+cmdExpr     :   ID {verifySymbolDeclaration(_input.LT(-1).getText());}
+                ATR 
+                expr 
+                FIM
             ;
 
 cmdIf       :   'se' AP expr OPREL expr FP

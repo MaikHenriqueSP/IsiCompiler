@@ -1,4 +1,4 @@
 programa
     numero a.
-    texto a.
+    leia(b).
 fimprog.
