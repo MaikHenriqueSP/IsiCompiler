@@ -24,7 +24,7 @@ public class Main {
             System.err.println("Semantic Error: " + e.getMessage());
         }
 
-        
+            
     }
 
 }

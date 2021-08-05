@@ -40,14 +40,14 @@ declara     :   (declaraVar)+
             ;
 
 declaraVar  :   TIPO ID {addSymbol(_input.LT(-1).getText(), type, null);}
-                (',' ID {addSymbol(_input.LT(-1).getText(), type, null);})*
+                (VIR ID {addSymbol(_input.LT(-1).getText(), type, null);})*
                 FIM
             ;
 
 TIPO        :   'numero' | 'texto'
             ;
 
-bloco       :   (cmd'.')*
+bloco       :   (cmd)*
             ;
 
 ID          :   [a-z] ([a-z] | [A-Z] | [0-9])*
@@ -92,7 +92,7 @@ cmdEnquanto :   'enquanto' AP expr OPREL expr FP
                 FC
             ;
 
-cmdPara     :   'para' AP (cmdExpr)* ';' (termo OPREL termo)*  ';' (cmdExpr)*  FP
+cmdPara     :   'para' AP ((cmdExpr)(VIR cmdExpr)*)* SEMICOLON ((expr OPREL expr)(OPREL expr)*)*  SEMICOLON ((cmdExpr)(VIR cmdExpr)*)*  FP
                 AC
                 (cmd)+
                 FC
@@ -132,4 +132,10 @@ WS          :   (' ' | '\n' | '\t' | '\r')  -> skip
             ;
 
 FIM         :   '.'
+            ;
+
+VIR         :   ','
+            ;
+
+SEMICOLON   :   ';'
             ;
