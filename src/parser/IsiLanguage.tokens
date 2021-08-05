@@ -17,6 +17,7 @@ NUM=16
 OPREL=17
 AC=18
 FC=19
+WS=20
 'programa'=1
 'fimprog'=2
 'declare'=3
