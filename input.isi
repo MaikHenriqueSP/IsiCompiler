@@ -1,4 +1,14 @@
 programa
     numero a.
-    leia(b).
+   
+
+    se (3 > 4) entao {
+        escreva(a).
+    } senao se (5 > 2) {
+        escreva(a).
+    } senao {
+        escreva(a).
+    }
+    
+
 fimprog.

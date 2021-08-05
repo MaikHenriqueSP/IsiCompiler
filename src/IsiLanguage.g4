@@ -83,6 +83,9 @@ cmdExpr     :   ID {verifySymbolDeclaration(_input.LT(-1).getText());}
 
 cmdIf       :   'se' AP conditional FP
                 'entao' AC (cmd)+ FC
+                ('senao se' AP conditional FP
+                    AC (cmd)+ FC
+                )*
                 ('senao' AC (cmd)+ FC)?
             ;
 
