@@ -9,6 +9,11 @@ public class Main {
 		b = reader.nextDouble();
 		t1 = reader.nextLine();
 		b = 1+2*3/b;
+		if (2>=3&&4<2) {
+			System.out.println(b);
+		} else {
+			System.out.println(a);}
+
 		System.out.println(a);
 		System.out.println(b);
 	}

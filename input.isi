@@ -7,7 +7,13 @@ programa
     leia(t1).
 
     a := 1 + 2 * 3 / b.
-   
+
+    se (2 >= 3 && 4 < 2) entao {
+        escreva(b).
+    } senao  {
+        escreva(a).
+    }
+
 
     escreva(a).
     escreva(b).    

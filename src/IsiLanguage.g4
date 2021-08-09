@@ -22,6 +22,9 @@ grammar IsiLanguage;
     private List<AbstractCommand> currentThread;
     private Stack<List<AbstractCommand>> stack = new Stack<>();
 
+    private List<AbstractCommand> trueList;
+    private List<AbstractCommand> falseList;
+
     public void addSymbol(String id, IsiType type, String value) {
         if (symbolTable.contains(id)) {
             throw new IsiSemanticException("Symbol '" + id + "' already declared.");
@@ -54,6 +57,7 @@ programa    :   'programa'
                 bloco
                 'fimprog' 
                 FIM {
+                    System.out.println(stack);
                     program.setSymbolTable(symbolTable);
                     program.setCommands(stack.pop());
                 }
@@ -63,14 +67,20 @@ programa    :   'programa'
 declara     :   (declaraVar)+
             ;
 
-declaraVar  :   tipo ID {
-                addSymbol(_input.LT(-1).getText(), this.type, null);}
-                (VIR ID {addSymbol(_input.LT(-1).getText(), type, null);})*
+declaraVar  :   tipo 
+                ID {
+                    addSymbol(_input.LT(-1).getText(), type, null);
+                }
+                (
+                    VIR ID {
+                        addSymbol(_input.LT(-1).getText(), type, null);
+                    }
+                )*
                 FIM
             ;
 
-tipo        :   'numero' { this.type = IsiType.NUMBER; }
-            |   'texto' { type = IsiType.TEXT; }
+tipo        :   'numero' { type = IsiType.NUMBER; }
+            |   'texto'  { type = IsiType.TEXT; }
             ;
 
 bloco       :   {
@@ -130,12 +140,39 @@ cmdAtr      :   ID {
                 }
             ;
 
-cmdIf       :   'se' AP conditional FP
-                'entao' AC (cmd)+ FC
+cmdIf       :   {
+                    content = "";
+                    falseList = null;
+                }
+                'se' 
+                    AP 
+                        conditional 
+                    FP
+                'entao' 
+                    AC { 
+                        currentThread = new ArrayList<>();
+                        stack.push(currentThread);
+                    } 
+                        (cmd)+ 
+                    FC {
+                        trueList = stack.pop();
+                    }
                 ('senao se' AP conditional FP
                     AC (cmd)+ FC
                 )*
-                ('senao' AC (cmd)+ FC)?
+                (
+                    'senao' 
+                    AC {
+                        currentThread = new ArrayList<>();
+                        stack.push(currentThread);
+                    } 
+                        (cmd)+ 
+                    FC {
+                        falseList = stack.pop();
+                        CommandIf cmd = new CommandIf(content, trueList, falseList);
+                        stack.peek().add(cmd);
+                    }
+                )?
             ;
 
 cmdEnquanto :   'enquanto' AP conditional FP
@@ -150,7 +187,19 @@ cmdPara     :   'para' AP ((cmdAtr)(VIR cmdAtr)*)* SEMICOLON conditional  SEMICO
                 FC
             ;
 
-conditional :   ((expr OPREL expr)(LOP expr OPREL expr)*)*
+conditional :   (
+                    (
+                        expr 
+                        OPREL {content += _input.LT(-1).getText();}
+                        expr
+                    )
+                    (
+                        LOP {content += _input.LT(-1).getText();}
+                        expr 
+                        OPREL {content += _input.LT(-1).getText();}
+                        expr
+                    )*
+                )*
             ;
 
 AP          :   '('

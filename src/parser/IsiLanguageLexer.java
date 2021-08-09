@@ -108,6 +108,9 @@ public class IsiLanguageLexer extends Lexer {
 	    private List<AbstractCommand> currentThread;
 	    private Stack<List<AbstractCommand>> stack = new Stack<>();
 
+	    private List<AbstractCommand> trueList;
+	    private List<AbstractCommand> falseList;
+
 	    public void addSymbol(String id, IsiType type, String value) {
 	        if (symbolTable.contains(id)) {
 	            throw new IsiSemanticException("Symbol '" + id + "' already declared.");
