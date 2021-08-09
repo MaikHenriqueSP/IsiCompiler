@@ -6,6 +6,8 @@ programa
         escreva(a).
     } senao se (5 > 2) {
         escreva(a).
+    } senao se (5 > 2) {
+        escreva(a).
     } senao {
         escreva(a).
     }

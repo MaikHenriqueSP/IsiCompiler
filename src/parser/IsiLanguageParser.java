@@ -102,7 +102,6 @@ public class IsiLanguageParser extends Parser {
 
 
 	    private IsiType type;
-	    private String name;
 	    private String value;
 	    private IsiSymbolTable symbolTable = new IsiSymbolTable();
 	    private IsiSymbol symbol;

@@ -8,7 +8,6 @@ grammar IsiLanguage;
 
 @members {
     private IsiType type;
-    private String name;
     private String value;
     private IsiSymbolTable symbolTable = new IsiSymbolTable();
     private IsiSymbol symbol;
@@ -44,7 +43,8 @@ declaraVar  :   TIPO ID {addSymbol(_input.LT(-1).getText(), type, null);}
                 FIM
             ;
 
-TIPO        :   'numero' | 'texto'
+TIPO        :   'numero' {type = IsiType.NUMBER;}
+            |   'textdo' {type = IsiType.TEXT;}
             ;
 
 bloco       :   (cmd)*
