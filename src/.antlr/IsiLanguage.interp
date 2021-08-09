@@ -62,7 +62,7 @@ bloco
 cmd
 cmdLeitura
 cmdEscrita
-cmdExpr
+cmdAtr
 cmdIf
 cmdEnquanto
 cmdPara

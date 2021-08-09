@@ -27,14 +27,13 @@ public class IsiLanguageParser extends Parser {
 		LOP=19, AC=20, FC=21, WS=22, FIM=23, VIR=24, SEMICOLON=25;
 	public static final int
 		RULE_programa = 0, RULE_declara = 1, RULE_declaraVar = 2, RULE_bloco = 3, 
-		RULE_cmd = 4, RULE_cmdLeitura = 5, RULE_cmdEscrita = 6, RULE_cmdExpr = 7, 
+		RULE_cmd = 4, RULE_cmdLeitura = 5, RULE_cmdEscrita = 6, RULE_cmdAtr = 7, 
 		RULE_cmdIf = 8, RULE_cmdEnquanto = 9, RULE_cmdPara = 10, RULE_conditional = 11, 
 		RULE_expr = 12, RULE_termo = 13;
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"programa", "declara", "declaraVar", "bloco", "cmd", "cmdLeitura", "cmdEscrita", 
-			"cmdExpr", "cmdIf", "cmdEnquanto", "cmdPara", "conditional", "expr", 
-			"termo"
+			"cmdAtr", "cmdIf", "cmdEnquanto", "cmdPara", "conditional", "expr", "termo"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -364,8 +363,8 @@ public class IsiLanguageParser extends Parser {
 		public CmdEscritaContext cmdEscrita() {
 			return getRuleContext(CmdEscritaContext.class,0);
 		}
-		public CmdExprContext cmdExpr() {
-			return getRuleContext(CmdExprContext.class,0);
+		public CmdAtrContext cmdAtr() {
+			return getRuleContext(CmdAtrContext.class,0);
 		}
 		public CmdIfContext cmdIf() {
 			return getRuleContext(CmdIfContext.class,0);
@@ -415,7 +414,7 @@ public class IsiLanguageParser extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(60);
-				cmdExpr();
+				cmdAtr();
 				}
 				break;
 			case T__4:
@@ -552,30 +551,30 @@ public class IsiLanguageParser extends Parser {
 		return _localctx;
 	}
 
-	public static class CmdExprContext extends ParserRuleContext {
+	public static class CmdAtrContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(IsiLanguageParser.ID, 0); }
 		public TerminalNode ATR() { return getToken(IsiLanguageParser.ATR, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public TerminalNode FIM() { return getToken(IsiLanguageParser.FIM, 0); }
-		public CmdExprContext(ParserRuleContext parent, int invokingState) {
+		public CmdAtrContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_cmdExpr; }
+		@Override public int getRuleIndex() { return RULE_cmdAtr; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof IsiLanguageListener ) ((IsiLanguageListener)listener).enterCmdExpr(this);
+			if ( listener instanceof IsiLanguageListener ) ((IsiLanguageListener)listener).enterCmdAtr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof IsiLanguageListener ) ((IsiLanguageListener)listener).exitCmdExpr(this);
+			if ( listener instanceof IsiLanguageListener ) ((IsiLanguageListener)listener).exitCmdAtr(this);
 		}
 	}
 
-	public final CmdExprContext cmdExpr() throws RecognitionException {
-		CmdExprContext _localctx = new CmdExprContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_cmdExpr);
+	public final CmdAtrContext cmdAtr() throws RecognitionException {
+		CmdAtrContext _localctx = new CmdAtrContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_cmdAtr);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -850,11 +849,11 @@ public class IsiLanguageParser extends Parser {
 		public CmdContext cmd(int i) {
 			return getRuleContext(CmdContext.class,i);
 		}
-		public List<CmdExprContext> cmdExpr() {
-			return getRuleContexts(CmdExprContext.class);
+		public List<CmdAtrContext> cmdAtr() {
+			return getRuleContexts(CmdAtrContext.class);
 		}
-		public CmdExprContext cmdExpr(int i) {
-			return getRuleContext(CmdExprContext.class,i);
+		public CmdAtrContext cmdAtr(int i) {
+			return getRuleContext(CmdAtrContext.class,i);
 		}
 		public List<TerminalNode> VIR() { return getTokens(IsiLanguageParser.VIR); }
 		public TerminalNode VIR(int i) {
@@ -893,7 +892,7 @@ public class IsiLanguageParser extends Parser {
 				{
 				{
 				setState(140);
-				cmdExpr();
+				cmdAtr();
 				}
 				setState(145);
 				_errHandler.sync(this);
@@ -904,7 +903,7 @@ public class IsiLanguageParser extends Parser {
 					setState(141);
 					match(VIR);
 					setState(142);
-					cmdExpr();
+					cmdAtr();
 					}
 					}
 					setState(147);
@@ -931,7 +930,7 @@ public class IsiLanguageParser extends Parser {
 				{
 				{
 				setState(156);
-				cmdExpr();
+				cmdAtr();
 				}
 				setState(161);
 				_errHandler.sync(this);
@@ -942,7 +941,7 @@ public class IsiLanguageParser extends Parser {
 					setState(157);
 					match(VIR);
 					setState(158);
-					cmdExpr();
+					cmdAtr();
 					}
 					}
 					setState(163);

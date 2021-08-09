@@ -55,7 +55,7 @@ ID          :   [a-z] ([a-z] | [A-Z] | [0-9])*
             
 cmd         :   cmdLeitura
             |   cmdEscrita
-            |   cmdExpr
+            |   cmdAtr
             |   cmdIf
             |   cmdEnquanto
             |   cmdPara
@@ -75,7 +75,7 @@ cmdEscrita  :   'escreva'
                 FIM
             ;
 
-cmdExpr     :   ID {verifySymbolDeclaration(_input.LT(-1).getText());}
+cmdAtr     :   ID {verifySymbolDeclaration(_input.LT(-1).getText());}
                 ATR 
                 expr 
                 FIM
@@ -95,7 +95,7 @@ cmdEnquanto :   'enquanto' AP conditional FP
                 FC
             ;
 
-cmdPara     :   'para' AP ((cmdExpr)(VIR cmdExpr)*)* SEMICOLON conditional  SEMICOLON ((cmdExpr)(VIR cmdExpr)*)*  FP
+cmdPara     :   'para' AP ((cmdAtr)(VIR cmdAtr)*)* SEMICOLON conditional  SEMICOLON ((cmdAtr)(VIR cmdAtr)*)*  FP
                 AC
                 (cmd)+
                 FC

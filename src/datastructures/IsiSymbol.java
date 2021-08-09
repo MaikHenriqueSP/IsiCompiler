@@ -1,6 +1,6 @@
 package datastructures;
 
-public class IsiSymbol {
+public abstract class IsiSymbol {
 
     private String name;
 
@@ -15,6 +15,8 @@ public class IsiSymbol {
     public void setName(String name) {
         this.name = name;
     }
+
+    public abstract String generateCode();
 
     @Override
     public String toString() {

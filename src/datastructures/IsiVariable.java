@@ -30,7 +30,14 @@ public class IsiVariable extends IsiSymbol {
     }
 
     @Override
+    public String generateCode() {
+        String code = type == IsiType.NUMBER ? "double" : "String";
+        return code + " " + super.getName() + ";";
+    }
+
+    @Override
     public String toString() {
         return "IsiVariable [type=" + type + ", value=" + value + "]";
     }
+
 }

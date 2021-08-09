@@ -1,7 +1,9 @@
 package datastructures;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class IsiSymbolTable {
 
@@ -21,6 +23,10 @@ public class IsiSymbolTable {
     
     public IsiSymbol get(String name) {
         return mapToSymbol.get(name);
+    }
+
+    public List<IsiSymbol> getSymbols() {
+        return mapToSymbol.values().stream().collect(Collectors.toList());
     }
 
     @Override
