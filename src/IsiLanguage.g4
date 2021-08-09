@@ -3,7 +3,9 @@ grammar IsiLanguage;
 @header {
     import datastructures.*;
     import exceptions.*;
+    import ast.*;
     import util.*;
+    import java.util.*;
 }
 
 @members {
@@ -11,6 +13,14 @@ grammar IsiLanguage;
     private String value;
     private IsiSymbolTable symbolTable = new IsiSymbolTable();
     private IsiSymbol symbol;
+
+    private String _test;
+    
+    private String currentID;
+    private String content;
+    private IsiProgram program = new IsiProgram();
+    private List<AbstractCommand> currentThread;
+    private Stack<List<AbstractCommand>> stack = new Stack<>();
 
     public void addSymbol(String id, IsiType type, String value) {
         if (symbolTable.contains(id)) {
@@ -26,28 +36,48 @@ grammar IsiLanguage;
             throw new IsiSemanticException("Symbol '" + id + "' wasn't declared.");            
         }
     }
+
+    public void generateProgram() {
+        program.generateProgram();
+    }
+
+    public void showCommands() {
+        for (AbstractCommand c : program.getCommands()) {
+            System.out.println(c);
+        }
+    }
     
 }
 
 programa    :   'programa' 
                 declara 
                 bloco
-                'fimprog' FIM
+                'fimprog' 
+                FIM {
+                    program.setSymbolTable(symbolTable);
+                    program.setCommands(stack.pop());
+                }
+
             ;
 
 declara     :   (declaraVar)+
             ;
 
-declaraVar  :   TIPO ID {addSymbol(_input.LT(-1).getText(), type, null);}
+declaraVar  :   tipo ID {
+                addSymbol(_input.LT(-1).getText(), this.type, null);}
                 (VIR ID {addSymbol(_input.LT(-1).getText(), type, null);})*
                 FIM
             ;
 
-TIPO        :   'numero' {type = IsiType.NUMBER;}
-            |   'textdo' {type = IsiType.TEXT;}
+tipo        :   'numero' { this.type = IsiType.NUMBER; }
+            |   'texto' { type = IsiType.TEXT; }
             ;
 
-bloco       :   (cmd)*
+bloco       :   {
+                    currentThread = new ArrayList<>();
+                    stack.push(currentThread);        
+                }
+                (cmd)*
             ;
 
 ID          :   [a-z] ([a-z] | [A-Z] | [0-9])*
@@ -63,22 +93,41 @@ cmd         :   cmdLeitura
 
 cmdLeitura  :  'leia' 
                 AP 
-                ID {verifySymbolDeclaration(_input.LT(-1).getText());}
+                ID  { 
+                        currentID = _input.LT(-1).getText();
+                        verifySymbolDeclaration(currentID);
+                    }
                 FP 
-                FIM
+                FIM {
+                    IsiVariable variable = (IsiVariable) symbolTable.get(currentID);
+                    CommandLeitura cmd = new CommandLeitura(currentID, variable);
+                    stack.peek().add(cmd);
+                }
             ;
 
 cmdEscrita  :   'escreva' 
                 AP 
-                ID {verifySymbolDeclaration(_input.LT(-1).getText());}
+                ID {
+                    currentID = _input.LT(-1).getText();
+                    verifySymbolDeclaration(currentID);
+                }
                 FP 
-                FIM
+                FIM {
+                    CommandEscrita cmd = new CommandEscrita(currentID);
+                    stack.peek().add(cmd);
+                }
             ;
 
-cmdAtr     :   ID {verifySymbolDeclaration(_input.LT(-1).getText());}
-                ATR 
+cmdAtr      :   ID {
+                    currentID = _input.LT(-1).getText();
+                    verifySymbolDeclaration(currentID);
+                }
+                ATR { content = ""; }
                 expr 
-                FIM
+                FIM {
+                    CommandAtribuicao cmd = new CommandAtribuicao(currentID, content);
+                    stack.peek().add(cmd);
+                }
             ;
 
 cmdIf       :   'se' AP conditional FP
@@ -113,10 +162,19 @@ FP          :   ')'
 ATR         :   ':='
             ;
 
-expr        :   termo (OP termo)*
+expr        :   termo 
+                (
+                    OP {content += _input.LT(-1).getText();}
+                    termo
+                )*
             ;
 
-termo       :   NUM |  ID
+termo       :   NUM  { content += _input.LT(-1).getText();}
+            |   ID   {
+                    currentID = _input.LT(-1).getText();
+                    verifySymbolDeclaration(currentID);
+                    content += currentID;
+                }
             ;
 
 OP          :   '+' | '-' | '*' | '/'

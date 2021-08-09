@@ -14,7 +14,7 @@ public class CommandLeitura extends AbstractCommand {
 
     @Override
     public String generateCode() {        
-        return id + "= reader." + getReadType();
+        return id + " = reader." + getReadType();
     }
 
     private String getReadType() {

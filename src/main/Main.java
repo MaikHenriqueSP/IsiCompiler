@@ -16,6 +16,8 @@ public class Main {
             IsiLanguageParser parser = new IsiLanguageParser(tokenStream);
             parser.programa();
             System.out.println("Compilation successful");
+            parser.showCommands();
+            parser.generateProgram();
 
         } catch (IOException e) {
             e.printStackTrace();

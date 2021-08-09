@@ -36,7 +36,7 @@ public class IsiProgram {
         for (AbstractCommand command : commands) {
             program.append("\t\t" + command.generateCode() + "\n");
         }
-        program.append("\t}");
+        program.append("\t}\n");
         program.append("}");
     }
 

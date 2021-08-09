@@ -3,7 +3,9 @@ package parser;
 
     import datastructures.*;
     import exceptions.*;
+    import ast.*;
     import util.*;
+    import java.util.*;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -52,6 +54,18 @@ public class IsiLanguageBaseListener implements IsiLanguageListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDeclaraVar(IsiLanguageParser.DeclaraVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTipo(IsiLanguageParser.TipoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTipo(IsiLanguageParser.TipoContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

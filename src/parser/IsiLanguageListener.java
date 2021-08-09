@@ -3,7 +3,9 @@ package parser;
 
     import datastructures.*;
     import exceptions.*;
+    import ast.*;
     import util.*;
+    import java.util.*;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -42,6 +44,16 @@ public interface IsiLanguageListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDeclaraVar(IsiLanguageParser.DeclaraVarContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link IsiLanguageParser#tipo}.
+	 * @param ctx the parse tree
+	 */
+	void enterTipo(IsiLanguageParser.TipoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLanguageParser#tipo}.
+	 * @param ctx the parse tree
+	 */
+	void exitTipo(IsiLanguageParser.TipoContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link IsiLanguageParser#bloco}.
 	 * @param ctx the parse tree

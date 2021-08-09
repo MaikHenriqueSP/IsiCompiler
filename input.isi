@@ -1,16 +1,15 @@
 programa
-    numero a.
+    numero a, b.
+    texto t1.
+
+    leia(a).
+    leia(b).
+    leia(t1).
+
+    a := 1 + 2 * 3 / b.
    
 
-    se (3 > 4) entao {
-        escreva(a).
-    } senao se (5 > 2) {
-        escreva(a).
-    } senao se (5 > 2) {
-        escreva(a).
-    } senao {
-        escreva(a).
-    }
-    
+    escreva(a).
+    escreva(b).    
 
 fimprog.
