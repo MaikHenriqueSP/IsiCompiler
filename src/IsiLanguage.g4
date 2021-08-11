@@ -152,7 +152,7 @@ cmdAtr      :   ID {
                     verifySymbolDeclaration(currentID);
                 }
                 ATR { content = ""; }
-                expr 
+                expr
                 FIM {
                     CommandAtribuicao cmd = new CommandAtribuicao(currentID, content);
                     stack.peek().add(cmd);
@@ -245,15 +245,16 @@ FP          :   ')'
 ATR         :   ':='
             ;
 
-expr        :   termo 
+expr        :   termo
                 (
                     OP {content += _input.LT(-1).getText();}
                     termo
                 )*
             ;
 
-termo       :   NUM  { content += _input.LT(-1).getText();}
-            |   ID   {
+termo       :   NUM  { content += _input.LT(-1).getText() }
+            |   TEXT { content += _input.LT(-1).getText();}
+            |   ID  {                
                     currentID = _input.LT(-1).getText();
                     verifySymbolDeclaration(currentID);
                     setSymbolToBeInUse(currentID);
@@ -264,7 +265,10 @@ termo       :   NUM  { content += _input.LT(-1).getText();}
 OP          :   '+' | '-' | '*' | '/'
             ;
 
-NUM         :   [0-9]+('.'[0-9]+)?
+NUM         :   [0-9]+('.'[0-9]+)? 
+            ;
+
+TEXT        :   '"'.*'"'
             ;
 
 OPREL       :   '<' | '>' | '<=' | '>=' | '!=' | '=='

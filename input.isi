@@ -1,6 +1,6 @@
 programa
-    numero a, b, c.
-    texto t1, t2.
+    numero a, b.
+    texto t1.
 
 
     leia(a).
@@ -8,6 +8,8 @@ programa
     leia(t1).
 
     a := 1 + 2 * 3 / b.
+    t1 := "aeaeae".
+    t1 := 123.11eadsadwd.
 
     se (2 >= 3 && 4 < 2) entao {
         escreva(b).
