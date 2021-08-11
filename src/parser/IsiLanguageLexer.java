@@ -111,6 +111,32 @@ public class IsiLanguageLexer extends Lexer {
 	    private List<AbstractCommand> trueList;
 	    private List<AbstractCommand> falseList;
 
+	    // Start - Expression validation related
+	    private List<IsiType> expressionTypes;
+	    private List<String> mathOperators;
+	    private IsiType expressionIsiType;
+	    private String assigningVariableID;
+
+	    public void setExpressionType() {
+	        if (expressionTypes.contains(IsiType.TEXT)) {
+	            expressionIsiType = IsiType.TEXT;
+	            return;
+	        }
+	        expressionIsiType = IsiType.NUMBER;
+	    }
+
+	    public void verifyAssignmentType() {
+	        IsiType variableType = getSymbolType(assigningVariableID);
+	        if (variableType != expressionIsiType) {
+	            throw new IsiSemanticException("Can't assign '" + expressionIsiType + "' to a '" + variableType + "' variable. Variable name: " + assigningVariableID);
+	        }
+	    }
+	    // End - Expression validation related
+	    
+	    public IsiType getSymbolType(String id) {
+	        return ((IsiVariable) symbolTable.get(id)).getType();
+	    }
+
 	    public void addSymbol(String id, IsiType type, String value) {
 	        if (symbolTable.contains(id)) {
 	            throw new IsiSemanticException("Symbol '" + id + "' already declared.");
@@ -141,6 +167,8 @@ public class IsiLanguageLexer extends Lexer {
 	        }
 	    }
 
+
+
 	    public void generateProgram() {
 	        program.generateProgram();
 	    }
@@ -149,7 +177,7 @@ public class IsiLanguageLexer extends Lexer {
 	        for (AbstractCommand c : program.getCommands()) {
 	            System.out.println(c);
 	        }
-	    }
+	    }  
 	    
 
 

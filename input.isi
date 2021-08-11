@@ -8,8 +8,8 @@ programa
     leia(t1).
 
     a := 1 + 2 * 3 / b.
-    t1 := "aeaeae".
-    t1 := 123.11eadsadwd.
+    t1 := "aeaeae" + 1.
+    t1 := 123eadsadwd.
 
     se (2 >= 3 && 4 < 2) entao {
         escreva(b).

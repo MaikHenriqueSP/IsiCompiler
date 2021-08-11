@@ -8,9 +8,8 @@ public class Main {
 		a = reader.nextDouble();
 		b = reader.nextDouble();
 		t1 = reader.nextLine();
-		b = 1+2*3/b;
-		t1 = "aeaeae";
-		t1 = 123.11;
+		a = 1+2*3/b;
+		t1 = "aeaeae"+1;
 		if (2>=3&&4<2) {
 			System.out.println(b);			System.out.println(b);
 		} else {

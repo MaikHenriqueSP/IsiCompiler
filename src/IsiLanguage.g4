@@ -25,6 +25,32 @@ grammar IsiLanguage;
     private List<AbstractCommand> trueList;
     private List<AbstractCommand> falseList;
 
+    // Start - Expression validation related
+    private List<IsiType> expressionTypes;
+    private List<String> mathOperators;
+    private IsiType expressionIsiType;
+    private String assigningVariableID;
+
+    public void setExpressionType() {
+        if (expressionTypes.contains(IsiType.TEXT)) {
+            expressionIsiType = IsiType.TEXT;
+            return;
+        }
+        expressionIsiType = IsiType.NUMBER;
+    }
+
+    public void verifyAssignmentType() {
+        IsiType variableType = getSymbolType(assigningVariableID);
+        if (variableType != expressionIsiType) {
+            throw new IsiSemanticException("Can't assign '" + expressionIsiType + "' to a '" + variableType + "' variable. Variable name: " + assigningVariableID);
+        }
+    }
+    // End - Expression validation related
+    
+    public IsiType getSymbolType(String id) {
+        return ((IsiVariable) symbolTable.get(id)).getType();
+    }
+
     public void addSymbol(String id, IsiType type, String value) {
         if (symbolTable.contains(id)) {
             throw new IsiSemanticException("Symbol '" + id + "' already declared.");
@@ -55,6 +81,8 @@ grammar IsiLanguage;
         }
     }
 
+
+
     public void generateProgram() {
         program.generateProgram();
     }
@@ -63,7 +91,7 @@ grammar IsiLanguage;
         for (AbstractCommand c : program.getCommands()) {
             System.out.println(c);
         }
-    }
+    }  
     
 }
 
@@ -72,8 +100,8 @@ programa    :   'programa'
                 bloco
                 'fimprog' 
                 FIM {
-                    System.out.println(stack);
-                    System.out.println(symbolTable.getSymbols());
+                   // System.out.println(stack);
+                   // System.out.println(symbolTable.getSymbols());
                     verifyIfAllVariablesAreInUse();
                     program.setSymbolTable(symbolTable);
                     program.setCommands(stack.pop());
@@ -149,14 +177,22 @@ cmdEscrita  :   'escreva'
 
 cmdAtr      :   ID {
                     currentID = _input.LT(-1).getText();
+                    assigningVariableID = currentID;
                     verifySymbolDeclaration(currentID);
+                    expressionTypes = new ArrayList<>();
+                    mathOperators = new ArrayList<>();
                 }
                 ATR { content = ""; }
-                expr
+                expr {
+                    setExpressionType();
+                    verifyAssignmentType();
+                }
                 FIM {
-                    CommandAtribuicao cmd = new CommandAtribuicao(currentID, content);
+                    CommandAtribuicao cmd = new CommandAtribuicao(assigningVariableID, content);
+                    System.out.println(assigningVariableID);
                     stack.peek().add(cmd);
                     setSymbolToBeInUse(currentID);
+                    
                 }
             ;
 
@@ -247,18 +283,28 @@ ATR         :   ':='
 
 expr        :   termo
                 (
-                    OP {content += _input.LT(-1).getText();}
+                    OP {
+                        content += _input.LT(-1).getText();
+                        mathOperators.add(_input.LT(-1).getText());
+                    }
                     termo
                 )*
             ;
 
-termo       :   NUM  { content += _input.LT(-1).getText() }
-            |   TEXT { content += _input.LT(-1).getText();}
+termo       :   NUM { 
+                    content += _input.LT(-1).getText(); 
+                    expressionTypes.add(IsiType.NUMBER);
+                }
+            |   TEXT { 
+                    content += _input.LT(-1).getText();
+                    expressionTypes.add(IsiType.TEXT);
+                }
             |   ID  {                
                     currentID = _input.LT(-1).getText();
                     verifySymbolDeclaration(currentID);
                     setSymbolToBeInUse(currentID);
                     content += currentID;
+                    expressionTypes.add(getSymbolType(currentID));
                 }
             ;
 

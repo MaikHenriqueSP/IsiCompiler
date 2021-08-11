@@ -27,6 +27,10 @@ public class Main {
         {
             System.err.println("Semantic Error: " + e.getMessage());
         }
+        //String a = 1 + 2 + 3 / "a";
+        //arrayType =[number, number, number, number];
+        //operatorsSequence = [+, +, /]
+        
     }
 
 }
