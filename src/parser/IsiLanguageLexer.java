@@ -126,6 +126,21 @@ public class IsiLanguageLexer extends Lexer {
 	        }
 	    }
 
+	    public void setSymbolToBeInUse(String id) {
+	        verifySymbolDeclaration(id);
+	        IsiVariable variable = (IsiVariable) symbolTable.get(id);
+	        variable.becomeInUse();
+	        symbolTable.add(variable);
+	    }
+
+	    public void verifyIfAllVariablesAreInUse() {
+	        Optional<IsiSymbol> variable = symbolTable.getSymbols().stream().filter(var -> !((IsiVariable) var).getIsBeingUsed()).findFirst();
+
+	        if (variable.isPresent()) {
+	            throw new IsiSemanticException("The varible  '" + variable.get().getName() + "' wasn't used.");
+	        }
+	    }
+
 	    public void generateProgram() {
 	        program.generateProgram();
 	    }

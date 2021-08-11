@@ -1,6 +1,7 @@
 programa
-    numero a, b.
-    texto t1.
+    numero a, b, c.
+    texto t1, t2.
+
 
     leia(a).
     leia(b).

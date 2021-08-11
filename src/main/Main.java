@@ -1,9 +1,11 @@
 package main;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+
 
 import exceptions.IsiSemanticException;
 import parser.*;
@@ -25,9 +27,6 @@ public class Main {
         {
             System.err.println("Semantic Error: " + e.getMessage());
         }
-
-
-    
     }
 
 }

@@ -40,6 +40,21 @@ grammar IsiLanguage;
         }
     }
 
+    public void setSymbolToBeInUse(String id) {
+        verifySymbolDeclaration(id);
+        IsiVariable variable = (IsiVariable) symbolTable.get(id);
+        variable.becomeInUse();
+        symbolTable.add(variable);
+    }
+
+    public void verifyIfAllVariablesAreInUse() {
+        Optional<IsiSymbol> variable = symbolTable.getSymbols().stream().filter(var -> !((IsiVariable) var).getIsBeingUsed()).findFirst();
+
+        if (variable.isPresent()) {
+            throw new IsiSemanticException("The varible  '" + variable.get().getName() + "' wasn't used.");
+        }
+    }
+
     public void generateProgram() {
         program.generateProgram();
     }
@@ -58,6 +73,8 @@ programa    :   'programa'
                 'fimprog' 
                 FIM {
                     System.out.println(stack);
+                    System.out.println(symbolTable.getSymbols());
+                    verifyIfAllVariablesAreInUse();
                     program.setSymbolTable(symbolTable);
                     program.setCommands(stack.pop());
                 }
@@ -112,6 +129,7 @@ cmdLeitura  :  'leia'
                     IsiVariable variable = (IsiVariable) symbolTable.get(currentID);
                     CommandLeitura cmd = new CommandLeitura(currentID, variable);
                     stack.peek().add(cmd);
+                    setSymbolToBeInUse(currentID);
                 }
             ;
 
@@ -125,6 +143,7 @@ cmdEscrita  :   'escreva'
                 FIM {
                     CommandEscrita cmd = new CommandEscrita(currentID);
                     stack.peek().add(cmd);
+                    setSymbolToBeInUse(currentID);
                 }
             ;
 
@@ -137,6 +156,7 @@ cmdAtr      :   ID {
                 FIM {
                     CommandAtribuicao cmd = new CommandAtribuicao(currentID, content);
                     stack.peek().add(cmd);
+                    setSymbolToBeInUse(currentID);
                 }
             ;
 
@@ -176,8 +196,7 @@ cmdIf       :   {
             ;
 
 cmdEnquanto :   {
-                    content = "";
-                    
+                    content = "";                    
                 }
 
                 'enquanto' 
@@ -237,6 +256,7 @@ termo       :   NUM  { content += _input.LT(-1).getText();}
             |   ID   {
                     currentID = _input.LT(-1).getText();
                     verifySymbolDeclaration(currentID);
+                    setSymbolToBeInUse(currentID);
                     content += currentID;
                 }
             ;

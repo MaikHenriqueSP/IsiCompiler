@@ -6,6 +6,7 @@ public class IsiVariable extends IsiSymbol {
     
     private IsiType type;
     private String value;
+    private boolean isBeingUsed;
     
     public IsiVariable(String name, IsiType type, String value) {
         super(name);
@@ -29,6 +30,14 @@ public class IsiVariable extends IsiSymbol {
         this.value = value;
     }
 
+    public boolean getIsBeingUsed() {
+        return isBeingUsed;
+    }
+
+    public void becomeInUse() {
+        this.isBeingUsed = true;
+    }
+
     @Override
     public String generateCode() {
         String code = type == IsiType.NUMBER ? "double" : "String";
@@ -37,7 +46,11 @@ public class IsiVariable extends IsiSymbol {
 
     @Override
     public String toString() {
-        return "IsiVariable [type=" + type + ", value=" + value + "]";
+        return "IsiVariable [name=" + super.getName() + " type=" + type + ", value=" + value + " isBeingUsed= " + isBeingUsed + "]";
     }
+
+    
+
+
 
 }

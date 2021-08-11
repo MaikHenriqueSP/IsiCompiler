@@ -135,6 +135,21 @@ public class IsiLanguageParser extends Parser {
 	        }
 	    }
 
+	    public void setSymbolToBeInUse(String id) {
+	        verifySymbolDeclaration(id);
+	        IsiVariable variable = (IsiVariable) symbolTable.get(id);
+	        variable.becomeInUse();
+	        symbolTable.add(variable);
+	    }
+
+	    public void verifyIfAllVariablesAreInUse() {
+	        Optional<IsiSymbol> variable = symbolTable.getSymbols().stream().filter(var -> !((IsiVariable) var).getIsBeingUsed()).findFirst();
+
+	        if (variable.isPresent()) {
+	            throw new IsiSemanticException("The varible  '" + variable.get().getName() + "' wasn't used.");
+	        }
+	    }
+
 	    public void generateProgram() {
 	        program.generateProgram();
 	    }
@@ -191,6 +206,8 @@ public class IsiLanguageParser extends Parser {
 			match(FIM);
 
 			                    System.out.println(stack);
+			                    System.out.println(symbolTable.getSymbols());
+			                    verifyIfAllVariablesAreInUse();
 			                    program.setSymbolTable(symbolTable);
 			                    program.setCommands(stack.pop());
 			                
@@ -589,6 +606,7 @@ public class IsiLanguageParser extends Parser {
 			                    IsiVariable variable = (IsiVariable) symbolTable.get(currentID);
 			                    CommandLeitura cmd = new CommandLeitura(currentID, variable);
 			                    stack.peek().add(cmd);
+			                    setSymbolToBeInUse(currentID);
 			                
 			}
 		}
@@ -645,6 +663,7 @@ public class IsiLanguageParser extends Parser {
 
 			                    CommandEscrita cmd = new CommandEscrita(currentID);
 			                    stack.peek().add(cmd);
+			                    setSymbolToBeInUse(currentID);
 			                
 			}
 		}
@@ -702,6 +721,7 @@ public class IsiLanguageParser extends Parser {
 
 			                    CommandAtribuicao cmd = new CommandAtribuicao(currentID, content);
 			                    stack.peek().add(cmd);
+			                    setSymbolToBeInUse(currentID);
 			                
 			}
 		}
@@ -929,8 +949,7 @@ public class IsiLanguageParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 
-			                    content = "";
-			                    
+			                    content = "";                    
 			                
 			setState(146);
 			match(T__10);
@@ -1331,6 +1350,7 @@ public class IsiLanguageParser extends Parser {
 
 				                    currentID = _input.LT(-1).getText();
 				                    verifySymbolDeclaration(currentID);
+				                    setSymbolToBeInUse(currentID);
 				                    content += currentID;
 				                
 				}
