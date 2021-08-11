@@ -2,14 +2,13 @@ programa
     numero a, b.
     texto t1.
 
-
     leia(a).
     leia(b).
     leia(t1).
-
-    a := 1 + 2 * 3 / b.
-    t1 := "aeaeae" + 1.
-    t1 := 123eadsadwd.
+    
+    t1 := 1 + "adas".
+    a :=  1 - 1.
+    b := 1.
 
     se (2 >= 3 && 4 < 2) entao {
         escreva(b).

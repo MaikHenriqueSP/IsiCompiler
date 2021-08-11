@@ -131,6 +131,23 @@ public class IsiLanguageLexer extends Lexer {
 	            throw new IsiSemanticException("Can't assign '" + expressionIsiType + "' to a '" + variableType + "' variable. Variable name: " + assigningVariableID);
 	        }
 	    }
+
+	    public void verifyOperationValidity() {       
+	        if (expressionIsiType == IsiType.NUMBER || mathOperators.size() == 0) {
+	            return;
+	        }
+
+
+	        if (mathOperators.contains("-")) {
+	            throw new IsiSemanticException("A TEXT expression cannot have a '-' operator.");
+	        }
+
+	        for (int i = 1; i < expressionTypes.size(); i++) {
+	            if (!mathOperators.get(i -1).equals("+") && (expressionTypes.get(i) == IsiType.TEXT || expressionTypes.get(i - 1) == IsiType.TEXT)) {
+	                throw new IsiSemanticException("Invalid operation.");
+	            }
+	        }
+	    }
 	    // End - Expression validation related
 	    
 	    public IsiType getSymbolType(String id) {
@@ -255,8 +272,8 @@ public class IsiLanguageLexer extends Lexer {
 		"\u00a1\7\60\2\2\u00a0\u00a2\t\5\2\2\u00a1\u00a0\3\2\2\2\u00a2\u00a3\3"+
 		"\2\2\2\u00a3\u00a1\3\2\2\2\u00a3\u00a4\3\2\2\2\u00a4\u00a6\3\2\2\2\u00a5"+
 		"\u009f\3\2\2\2\u00a5\u00a6\3\2\2\2\u00a6&\3\2\2\2\u00a7\u00ab\7$\2\2\u00a8"+
-		"\u00aa\13\2\2\2\u00a9\u00a8\3\2\2\2\u00aa\u00ad\3\2\2\2\u00ab\u00a9\3"+
-		"\2\2\2\u00ab\u00ac\3\2\2\2\u00ac\u00ae\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ae"+
+		"\u00aa\t\3\2\2\u00a9\u00a8\3\2\2\2\u00aa\u00ad\3\2\2\2\u00ab\u00a9\3\2"+
+		"\2\2\u00ab\u00ac\3\2\2\2\u00ac\u00ae\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ae"+
 		"\u00af\7$\2\2\u00af(\3\2\2\2\u00b0\u00ba\t\6\2\2\u00b1\u00b2\7>\2\2\u00b2"+
 		"\u00ba\7?\2\2\u00b3\u00b4\7@\2\2\u00b4\u00ba\7?\2\2\u00b5\u00b6\7#\2\2"+
 		"\u00b6\u00ba\7?\2\2\u00b7\u00b8\7?\2\2\u00b8\u00ba\7?\2\2\u00b9\u00b0"+
@@ -266,8 +283,8 @@ public class IsiLanguageLexer extends Lexer {
 		"\2\u00c0,\3\2\2\2\u00c1\u00c2\7}\2\2\u00c2.\3\2\2\2\u00c3\u00c4\7\177"+
 		"\2\2\u00c4\60\3\2\2\2\u00c5\u00c6\t\7\2\2\u00c6\u00c7\3\2\2\2\u00c7\u00c8"+
 		"\b\31\2\2\u00c8\62\3\2\2\2\u00c9\u00ca\7\60\2\2\u00ca\64\3\2\2\2\u00cb"+
-		"\u00cc\7.\2\2\u00cc\66\3\2\2\2\u00cd\u00ce\7=\2\2\u00ce8\3\2\2\2\13\2"+
-		"\u008c\u008e\u009d\u00a3\u00a5\u00ab\u00b9\u00bf\3\b\2\2";
+		"\u00cc\7.\2\2\u00cc\66\3\2\2\2\u00cd\u00ce\7=\2\2\u00ce8\3\2\2\2\f\2\u008c"+
+		"\u008e\u009d\u00a3\u00a5\u00a9\u00ab\u00b9\u00bf\3\b\2\2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

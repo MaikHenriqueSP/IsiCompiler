@@ -140,6 +140,23 @@ public class IsiLanguageParser extends Parser {
 	            throw new IsiSemanticException("Can't assign '" + expressionIsiType + "' to a '" + variableType + "' variable. Variable name: " + assigningVariableID);
 	        }
 	    }
+
+	    public void verifyOperationValidity() {       
+	        if (expressionIsiType == IsiType.NUMBER || mathOperators.size() == 0) {
+	            return;
+	        }
+
+
+	        if (mathOperators.contains("-")) {
+	            throw new IsiSemanticException("A TEXT expression cannot have a '-' operator.");
+	        }
+
+	        for (int i = 1; i < expressionTypes.size(); i++) {
+	            if (!mathOperators.get(i -1).equals("+") && (expressionTypes.get(i) == IsiType.TEXT || expressionTypes.get(i - 1) == IsiType.TEXT)) {
+	                throw new IsiSemanticException("Invalid operation.");
+	            }
+	        }
+	    }
 	    // End - Expression validation related
 	    
 	    public IsiType getSymbolType(String id) {
@@ -233,8 +250,6 @@ public class IsiLanguageParser extends Parser {
 			setState(34);
 			match(FIM);
 
-			                   // System.out.println(stack);
-			                   // System.out.println(symbolTable.getSymbols());
 			                    verifyIfAllVariablesAreInUse();
 			                    program.setSymbolTable(symbolTable);
 			                    program.setCommands(stack.pop());
@@ -750,12 +765,12 @@ public class IsiLanguageParser extends Parser {
 
 			                    setExpressionType();
 			                    verifyAssignmentType();
+			                    verifyOperationValidity();
 			                
 			setState(98);
 			match(FIM);
 
 			                    CommandAtribuicao cmd = new CommandAtribuicao(assigningVariableID, content);
-			                    System.out.println(assigningVariableID);
 			                    stack.peek().add(cmd);
 			                    setSymbolToBeInUse(currentID);
 			                    
