@@ -175,10 +175,25 @@ cmdIf       :   {
                 )?
             ;
 
-cmdEnquanto :   'enquanto' AP conditional FP
-                AC
-                (cmd)+
-                FC
+cmdEnquanto :   {
+                    content = "";
+                    
+                }
+
+                'enquanto' 
+                    AP 
+                        conditional 
+                    FP
+                    AC {
+                        currentThread = new ArrayList<>();
+                        stack.push(currentThread);
+                    }
+                        (cmd)+
+                    FC
+                {
+                    CommandEnquanto enquanto = new CommandEnquanto(content, stack.pop());
+                    stack.peek().add(enquanto);
+                }
             ;
 
 cmdPara     :   'para' AP ((cmdAtr)(VIR cmdAtr)*)* SEMICOLON conditional  SEMICOLON ((cmdAtr)(VIR cmdAtr)*)*  FP

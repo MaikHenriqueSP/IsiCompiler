@@ -10,8 +10,14 @@ programa
 
     se (2 >= 3 && 4 < 2) entao {
         escreva(b).
+        escreva(b).
     } senao  {
         escreva(a).
+    }
+
+    enquanto (a > 2 || 4 < b && 1 > 2) {
+        escreva(a).
+        escreva(b).
     }
 
 

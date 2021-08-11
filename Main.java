@@ -10,9 +10,14 @@ public class Main {
 		t1 = reader.nextLine();
 		b = 1+2*3/b;
 		if (2>=3&&4<2) {
-			System.out.println(b);
+			System.out.println(b);			System.out.println(b);
 		} else {
 			System.out.println(a);}
+
+		while (a>2||4<b&&1>2) {
+			System.out.println(a);
+			System.out.println(b);
+		}
 
 		System.out.println(a);
 		System.out.println(b);
