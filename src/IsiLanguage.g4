@@ -171,6 +171,7 @@ cmd         :   cmdLeitura
             |   cmdPara
             |   cmdUnario
             |   cmdComentario
+            |   cmdFacaEnquanto
             ;
 
 cmdLeitura  :  'leia' 
@@ -318,6 +319,24 @@ cmdComentario   :   CMT {
                         stack.peek().add(cmdComentario);
                     }
                 ;
+
+cmdFacaEnquanto     :   {
+                            content = "";
+                        }
+                        'faca' 
+                            AC {
+                                currentThread = new ArrayList<>();
+                                stack.push(currentThread);
+                            }                                
+                                (cmd)*
+                            FC
+                        'enquanto' AP conditional FP
+                        {
+                            List<AbstractCommand> commands = stack.pop();
+                            CommandFacaEnquanto cfe = new CommandFacaEnquanto(content, commands);
+                            stack.peek().add(cfe);                            
+                        }
+                    ;
 
 conditional :   (
                     (

@@ -15,6 +15,10 @@ programa
     
     #djsadjs dsada akl#
 
+    faca {
+        escreva(a).
+    } enquanto (1 < 2)
+
     se (2 >= 3 && 4 < 2) entao {
         escreva(b).
         escreva(b).

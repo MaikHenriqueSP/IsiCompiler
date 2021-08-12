@@ -191,6 +191,18 @@ public class IsiLanguageBaseListener implements IsiLanguageListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCmdFacaEnquanto(IsiLanguageParser.CmdFacaEnquantoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCmdFacaEnquanto(IsiLanguageParser.CmdFacaEnquantoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterConditional(IsiLanguageParser.ConditionalContext ctx) { }
 	/**
 	 * {@inheritDoc}
