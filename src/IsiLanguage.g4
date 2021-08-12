@@ -170,6 +170,7 @@ cmd         :   cmdLeitura
             |   cmdEnquanto
             |   cmdPara
             |   cmdUnario
+            |   cmdComentario
             ;
 
 cmdLeitura  :  'leia' 
@@ -312,6 +313,12 @@ cmdUnario   :
                 }
             ;
 
+cmdComentario   :   CMT {
+                        CommandComentario cmdComentario = new CommandComentario(_input.LT(-1).getText());
+                        stack.peek().add(cmdComentario);
+                    }
+                ;
+
 conditional :   (
                     (
                         expr 
@@ -369,7 +376,10 @@ OP          :   '+' | '-' | '*' | '/'
 NUM         :   [0-9]+('.'[0-9]+)? 
             ;
 
-TEXT        :   '"'([a-z] | [A-Z] | [0-9])*'"'
+TEXT        :   '"'([a-z] | [A-Z] | [0-9] | WS)*'"'
+            ;
+
+CMT         :   '#'([a-z] | [A-Z] | [0-9] | WS)*'#'
             ;
 
 OPREL       :   '<' | '>' | '<=' | '>=' | '!=' | '=='
@@ -384,7 +394,7 @@ AC          :   '{'
 FC          :   '}'
             ;
 
-WS          :   (' ' | '\n' | '\t' | '\r')  -> skip
+WS          :   (' ' | '\n' | '\t' | '\r')  -> channel(HIDDEN)
             ;
 
 FIM         :   '.'

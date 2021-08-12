@@ -6,13 +6,14 @@ programa
     leia(b).
     leia(t1).
     
-    t1 := 1 + "adas".
+    t1 := 1 + "adas  dsda".
     a :=  1 - 1.
     b := 1.
 
     a++.
     ++a.
     
+    #djsadjs dsada akl#
 
     se (2 >= 3 && 4 < 2) entao {
         escreva(b).
