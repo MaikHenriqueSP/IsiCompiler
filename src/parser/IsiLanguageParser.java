@@ -1286,6 +1286,7 @@ public class IsiLanguageParser extends Parser {
 					match(UNARY);
 
 					                            content = _input.LT(-1).getText();
+					                            isPostUnary = false;
 					                        
 					setState(210);
 					match(ID);

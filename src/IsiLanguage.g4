@@ -297,6 +297,7 @@ cmdUnario   :
                     | 
                         UNARY {
                             content = _input.LT(-1).getText();
+                            isPostUnary = false;
                         } 
                         ID { 
                             currentID = _input.LT(-1).getText();

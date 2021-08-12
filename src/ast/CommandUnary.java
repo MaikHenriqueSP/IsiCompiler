@@ -13,6 +13,7 @@ public class CommandUnary extends AbstractCommand {
 
     @Override
     public String generateCode() {
+        System.out.println(isPostUnary);
         String expression = isPostUnary ? id + unaryOperation : unaryOperation + id;
         return "\n\t\t" + expression + ";\n";
     }

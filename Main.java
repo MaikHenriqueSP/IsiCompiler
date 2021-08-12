@@ -15,7 +15,7 @@ public class Main {
 		a++;
 
 		
-		a++;
+		++a;
 
 		if (2>=3&&4<2) {
 			System.out.println(b);			System.out.println(b);
