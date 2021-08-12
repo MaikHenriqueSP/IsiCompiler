@@ -113,15 +113,15 @@ public class IsiLanguageLexer extends Lexer {
 	    private List<AbstractCommand> trueList;
 	    private List<AbstractCommand> falseList;
 
+	    // Start - Unary operations related
+	    private boolean isPostUnary;
+	    // End - Unary operations related
+
 	    // Start - Expression validation related
 	    private List<IsiType> expressionTypes;
 	    private List<String> mathOperators;
 	    private IsiType expressionIsiType;
 	    private String assigningVariableID;
-
-	    // Start - Unary operations related
-	    private boolean isPostUnary;
-	    // End - Unary operations related
 
 	    public void setExpressionType() {
 	        if (expressionTypes.contains(IsiType.TEXT)) {
@@ -142,7 +142,6 @@ public class IsiLanguageLexer extends Lexer {
 	        if (expressionIsiType == IsiType.NUMBER || mathOperators.size() == 0) {
 	            return;
 	        }
-
 
 	        if (mathOperators.contains("-")) {
 	            throw new IsiSemanticException("A TEXT expression cannot have a '-' operator.");
@@ -196,6 +195,11 @@ public class IsiLanguageLexer extends Lexer {
 	        }
 	    }
 
+	    public void verifyBooleanExpression() {
+	        if (expressionIsiType != IsiType.NUMBER) {
+	            throw new IsiSemanticException("A boolean expression can only contain subexpressions of type NUMBER");
+	        }
+	    }
 
 
 	    public void generateProgram() {
