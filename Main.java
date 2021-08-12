@@ -12,7 +12,7 @@ public class Main {
 		a = 1-1;
 		b = 1;
 		
-		1b;
+		a++;
 
 		
 		++a;
@@ -29,6 +29,13 @@ public class Main {
 			System.out.println(b);			System.out.println(b);
 		} else {
 			System.out.println(a);}
+
+		
+		for (a=2,b=3;a<b&&a<10;a=a+1,b=b+1) {
+			System.out.println(a);
+			System.out.println(b);
+
+		}
 
 		while (a>2||4<b&&1>2) {
 			System.out.println(a);

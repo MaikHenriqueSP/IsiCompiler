@@ -154,6 +154,12 @@ public class IsiLanguageLexer extends Lexer {
 	        }
 	    }
 	    // End - Expression validation related
+
+	    // Start - Loop-for related
+	    private String loopForVariables;
+	    private String loopForCondition;
+	    private String loopForIncrementer;
+	    // End - Loop-for related
 	    
 	    public IsiType getSymbolType(String id) {
 	        return ((IsiVariable) symbolTable.get(id)).getType();
@@ -191,6 +197,12 @@ public class IsiLanguageLexer extends Lexer {
 
 	    public void verifyType(String id, IsiType type) {
 	        if (getSymbolType(id) != type) {
+	            throw new IsiSemanticException("The variable is not a " + type);
+	        }
+	    }
+
+	    public void verifyExpectedExpressionType(IsiType type) {
+	        if (expressionIsiType != type) {
 	            throw new IsiSemanticException("The variable is not a " + type);
 	        }
 	    }

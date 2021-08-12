@@ -66,6 +66,12 @@ grammar IsiLanguage;
         }
     }
     // End - Expression validation related
+
+    // Start - Loop-for related
+    private String loopForVariables;
+    private String loopForCondition;
+    private String loopForIncrementer;
+    // End - Loop-for related
     
     public IsiType getSymbolType(String id) {
         return ((IsiVariable) symbolTable.get(id)).getType();
@@ -103,6 +109,12 @@ grammar IsiLanguage;
 
     public void verifyType(String id, IsiType type) {
         if (getSymbolType(id) != type) {
+            throw new IsiSemanticException("The variable is not a " + type);
+        }
+    }
+
+    public void verifyExpectedExpressionType(IsiType type) {
+        if (expressionIsiType != type) {
             throw new IsiSemanticException("The variable is not a " + type);
         }
     }
@@ -284,10 +296,56 @@ cmdEnquanto :   {
             ;
 
 
-cmdPara     :   'para' AP ((cmdAtr)(VIR cmdAtr)*)* SEMICOLON conditional  SEMICOLON ((cmdAtr)(VIR cmdAtr)*)*  FP
-                AC
-                (cmd)+
-                FC
+cmdPara     :   {
+                    loopForVariables = "";
+                    currentThread = new ArrayList<>();
+                    stack.push(currentThread);
+                    content = "";
+                }
+                'para' 
+                    AP 
+                        (cmdAtrPara) { loopForVariables = content; }
+                        SEMICOLON { content = "";}
+                        (conditional) {loopForCondition = content;} 
+                        SEMICOLON { content = "";}
+                        (cmdAtrPara)(VIR cmdAtrPara)* {loopForIncrementer = content;}
+                        
+                    FP                    
+                'faca'
+                    AC
+                        (cmd)+
+                    FC
+                {
+                    List<AbstractCommand> cmds = stack.pop();
+                    CommandPara cpara = new CommandPara(loopForVariables, loopForCondition, loopForIncrementer, cmds);
+                    stack.peek().add(cpara);
+                }
+            ;
+
+cmdAtrPara  :
+                (
+                    (
+                        cmdParaVar
+                    )
+                    (
+                        VIR { content += ",";}
+                        cmdParaVar
+                    )*
+                )*
+            ;
+cmdParaVar :    ID { 
+                    currentID = _input.LT(-1).getText();
+                    content += currentID;
+                    verifySymbolDeclaration(currentID);
+                    verifyType(currentID, IsiType.NUMBER);
+                }
+                ATR { content += "=";}
+                expr {
+                    {
+                        setExpressionType();
+                        verifyExpectedExpressionType(IsiType.NUMBER);
+                    }
+                }
             ;
 
 cmdUnario   : 

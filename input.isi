@@ -10,7 +10,7 @@ programa
     a :=  1 - 1.
     b := 1.
 
-    a+.
+    a++.
     ++a.
     
     #djsadjs dsada akl#
@@ -24,6 +24,11 @@ programa
         escreva(b).
     } senao  {
         escreva(a).
+    }
+
+    para (a := 2, b := 3; a < b && a < 10; a := a + 1, b := b + 1) faca {
+        escreva(a).
+        escreva(b).
     }
 
     enquanto (a > 2 || 4 < b && 1 > 2) {
