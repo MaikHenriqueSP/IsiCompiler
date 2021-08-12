@@ -25,6 +25,7 @@ WS=24
 FIM=25
 VIR=26
 SEMICOLON=27
+UNARY=28
 'programa'=1
 'fimprog'=2
 'numero'=3

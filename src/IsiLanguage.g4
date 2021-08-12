@@ -31,6 +31,10 @@ grammar IsiLanguage;
     private IsiType expressionIsiType;
     private String assigningVariableID;
 
+    // Start - Unary operations related
+    private boolean isPostUnary;
+    // End - Unary operations related
+
     public void setExpressionType() {
         if (expressionTypes.contains(IsiType.TEXT)) {
             expressionIsiType = IsiType.TEXT;
@@ -98,6 +102,12 @@ grammar IsiLanguage;
         }
     }
 
+    public void verifyType(String id, IsiType type) {
+        if (getSymbolType(id) != type) {
+            throw new IsiSemanticException("The variable is not a " + type);
+        }
+    }
+
 
 
     public void generateProgram() {
@@ -159,6 +169,7 @@ cmd         :   cmdLeitura
             |   cmdIf
             |   cmdEnquanto
             |   cmdPara
+            |   cmdUnario
             ;
 
 cmdLeitura  :  'leia' 
@@ -266,10 +277,38 @@ cmdEnquanto :   {
                 }
             ;
 
+
 cmdPara     :   'para' AP ((cmdAtr)(VIR cmdAtr)*)* SEMICOLON conditional  SEMICOLON ((cmdAtr)(VIR cmdAtr)*)*  FP
                 AC
                 (cmd)+
                 FC
+            ;
+
+cmdUnario   : 
+                (
+                        ID { 
+                            currentID = _input.LT(-1).getText();
+                            verifySymbolDeclaration(currentID);
+                            verifyType(currentID, IsiType.NUMBER);                            
+                        }
+                        UNARY {
+                            content = _input.LT(-1).getText(); 
+                            isPostUnary = true;}
+                    | 
+                        UNARY {
+                            content = _input.LT(-1).getText();
+                        } 
+                        ID { 
+                            currentID = _input.LT(-1).getText();
+                            verifySymbolDeclaration(currentID);
+                            verifyType(currentID, IsiType.NUMBER);
+                        }
+                )* 
+                FIM
+                {
+                    CommandUnary cmdUn = new CommandUnary(content, currentID, isPostUnary);
+                    stack.peek().add(cmdUn);
+                }
             ;
 
 conditional :   (
@@ -354,4 +393,7 @@ VIR         :   ','
             ;
 
 SEMICOLON   :   ';'
+            ;
+
+UNARY       :   '++' | '--'
             ;

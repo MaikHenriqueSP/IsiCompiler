@@ -10,6 +10,10 @@ programa
     a :=  1 - 1.
     b := 1.
 
+    a++.
+    ++a.
+    
+
     se (2 >= 3 && 4 < 2) entao {
         escreva(b).
         escreva(b).

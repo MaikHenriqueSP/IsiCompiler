@@ -11,6 +11,12 @@ public class Main {
 		t1 = 1+"adas";
 		a = 1-1;
 		b = 1;
+		
+		a++;
+
+		
+		a++;
+
 		if (2>=3&&4<2) {
 			System.out.println(b);			System.out.println(b);
 		} else {
