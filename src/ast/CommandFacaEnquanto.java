@@ -17,7 +17,7 @@ public class CommandFacaEnquanto extends AbstractCommand {
 
         code.append("\n\t\tdo {\n");
         generateBlock(code, commands);
-        code.append("\t\twhile(");
+        code.append("\t\t} while(");
         code.append(condition);
         code.append(")\n");
 
