@@ -340,17 +340,30 @@ cmdFacaEnquanto     :   {
 
 conditional :   (
                     (
-                        expr 
+                        booleanExpr 
                         OPREL {content += _input.LT(-1).getText();}
-                        expr
+                        booleanExpr
                     )
                     (
                         LOP {content += _input.LT(-1).getText();}
-                        expr 
+                        booleanExpr 
                         OPREL {content += _input.LT(-1).getText();}
-                        expr
+                        booleanExpr
                     )*
                 )*
+            ;
+
+booleanExpr :  {
+                expressionTypes = new ArrayList<>();
+            }
+            expr {
+                setExpressionType();
+                System.out.println(expressionTypes);
+                System.out.println(_input.LT(-1).getText());
+                if (expressionIsiType != IsiType.NUMBER) {
+                    throw new IsiSemanticException("A boolean expression can only contain subexpressions of type NUMBER");
+                }
+            }
             ;
 
 AP          :   '('

@@ -175,6 +175,16 @@ public interface IsiLanguageListener extends ParseTreeListener {
 	 */
 	void exitConditional(IsiLanguageParser.ConditionalContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link IsiLanguageParser#booleanExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanExpr(IsiLanguageParser.BooleanExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link IsiLanguageParser#booleanExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanExpr(IsiLanguageParser.BooleanExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link IsiLanguageParser#expr}.
 	 * @param ctx the parse tree
 	 */

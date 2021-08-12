@@ -19,7 +19,7 @@ public class CommandFacaEnquanto extends AbstractCommand {
         generateBlock(code, commands);
         code.append("\t\t} while(");
         code.append(condition);
-        code.append(")\n");
+        code.append(");\n");
 
         return code.toString();
     }

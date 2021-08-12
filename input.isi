@@ -17,7 +17,7 @@ programa
 
     faca {
         escreva(a).
-    } enquanto (1 < 2)
+    } enquanto (a < t1)
 
     se (2 >= 3 && 4 < 2) entao {
         escreva(b).
