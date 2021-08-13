@@ -27,7 +27,8 @@ public class Main {
 
 		if (2>=3&&4<2) {
 			System.out.println(b);			System.out.println(b);
-		} else {
+		}
+		 else{
 			System.out.println(a);}
 
 		

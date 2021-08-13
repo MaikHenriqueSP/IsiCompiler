@@ -242,7 +242,7 @@ cmdAtr      :   ID {
 
 cmdIf       :   {
                     content = "";
-                    falseList = null;
+                    falseList = new ArrayList<>();
                 }
                 'se' 
                     AP 
@@ -256,10 +256,8 @@ cmdIf       :   {
                         (cmd)+ 
                     FC {
                         trueList = stack.pop();
+                      
                     }
-                ('senao se' AP conditional FP
-                    AC (cmd)+ FC
-                )*
                 (
                     'senao' 
                     AC {
@@ -269,10 +267,12 @@ cmdIf       :   {
                         (cmd)+ 
                     FC {
                         falseList = stack.pop();
-                        CommandIf cmd = new CommandIf(content, trueList, falseList);
-                        stack.peek().add(cmd);
+                        
                     }
-                )?
+                )?{
+                    CommandIf cmd = new CommandIf(content, trueList, falseList);
+                    stack.peek().add(cmd);
+                }
             ;
 
 cmdEnquanto :   {

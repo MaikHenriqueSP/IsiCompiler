@@ -19,6 +19,10 @@ programa
         escreva(a).
     } enquanto (a < 3)
 
+    se (2<=3) entao {
+        escreva(a).
+    }
+
     se (2 >= 3 && 4 < 2) entao {
         escreva(b).
         escreva(b).
