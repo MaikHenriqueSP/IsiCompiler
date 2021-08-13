@@ -30,12 +30,12 @@ public class Main {
                 throw new IsiSyntaxException(syntaxErrorListener.getLine(), syntaxErrorListener.getColumn(), syntaxErrorListener.getMessage());
             }
 
-            System.out.println("Compilation successful");
             parser.showCommands();
             parser.generateProgram();
             
             LocalTime finish = LocalTime.now();
             LocalTime diff = finish.minusNanos(start.toNanoOfDay());
+            System.out.println("Compilation successful");
             System.out.println("Compilation time: " + diff);
 
         } catch (IOException e) {
@@ -45,9 +45,6 @@ public class Main {
         } catch (IsiSyntaxException e) {
             System.err.println(e.getMessage());            
         }
-        //String a = 1 + 2 + 3 / "a";
-        //arrayType =[number, number, number, number];
-        //operatorsSequence = [+, +, /]
 
     }
 

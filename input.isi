@@ -6,14 +6,14 @@ programa
     leia(b).
     leia(t1).
     
-    t1 := 1 + "adas  dsda".
+    t1 := 1  - 1 + "adas  dsda".
     a :=  1 - 1.
     b := 1.
 
     a++.
     ++a.
     
-    #djsadjs dsada akl#
+    # oi eu sou um comentario #
 
     faca {
         escreva(a).

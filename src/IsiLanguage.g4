@@ -55,8 +55,11 @@ grammar IsiLanguage;
             return;
         }
 
-        if (mathOperators.contains("-")) {
-            throw new IsiSemanticException("A TEXT expression cannot have a '-' operator.");
+        int minusOperatorIndex = mathOperators.indexOf("-");
+        int textTypeIndex = expressionTypes.indexOf(IsiType.TEXT);
+
+        if (minusOperatorIndex != -1 && minusOperatorIndex >= textTypeIndex) {
+            throw new IsiSemanticException("A TEXT expression cannot be operated by a '-' operator.");
         }
 
         for (int i = 1; i < expressionTypes.size(); i++) {
