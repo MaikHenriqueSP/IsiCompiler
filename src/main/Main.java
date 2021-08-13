@@ -2,6 +2,7 @@ package main;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.time.LocalTime;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -14,6 +15,7 @@ import parser.*;
 public class Main {
     public static void main(String[] args) {
         try {            
+            LocalTime start = LocalTime.now();
             IsiLanguageLexer lexer = new IsiLanguageLexer(CharStreams.fromFileName("input.isi"));            
             
             CommonTokenStream tokenStream = new CommonTokenStream(lexer);
@@ -31,6 +33,10 @@ public class Main {
             System.out.println("Compilation successful");
             parser.showCommands();
             parser.generateProgram();
+            
+            LocalTime finish = LocalTime.now();
+            LocalTime diff = finish.minusNanos(start.toNanoOfDay());
+            System.out.println("Compilation time: " + diff);
 
         } catch (IOException e) {
             e.printStackTrace();
