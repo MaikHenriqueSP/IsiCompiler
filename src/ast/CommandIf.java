@@ -20,9 +20,12 @@ public class CommandIf extends AbstractCommand {
 
         code.append("if (" + condition + ") {\n");
         generateBlock(code, trueList);
-        code.append("\n\t\t} else {\n");
-        generateBlock(code, falseList);
-        code.append("}\n");
+        code.append("\n\t\t}\n");
+        if (falseList.size() > 0){
+            code.append("\t\t else{\n");
+            generateBlock(code, falseList);
+            code.append("}\n");            
+        }
         
         return code.toString();
     }
