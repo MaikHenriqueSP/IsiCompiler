@@ -2,6 +2,7 @@
 
 Membros:   
     André Ricca Yoshida - RA 11126515
+    
     Maik Henrique - RA 11201720058
 
 Projeto final da matéria Compiladores, utilizando como base o IsiLanguage e compilando em Java.
